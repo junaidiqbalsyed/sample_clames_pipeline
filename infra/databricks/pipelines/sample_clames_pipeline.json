@@ -1,0 +1,28 @@
+{
+  "catalog": "sample_clames",
+  "channel": "CURRENT",
+  "configuration": {
+    "event_hub_name": "telemetry-events",
+    "event_hub_namespace": "sensor-stream",
+    "service_credential_name": "eventhub_sensor_stream_cred"
+  },
+  "continuous": false,
+  "development": false,
+  "environment": {
+    "dependencies": [
+      "geopy"
+    ]
+  },
+  "libraries": [
+    {
+      "glob": {
+        "include": "/Workspace/Users/<your-user-id>/clames/sample_clames_pipeline/transformations/**"
+      }
+    }
+  ],
+  "name": "sample_clames_pipeline",
+  "photon": true,
+  "root_path": "/Workspace/Users/<your-user-id>/clames/sample_clames_pipeline",
+  "schema": "01_bronze",
+  "serverless": true
+}

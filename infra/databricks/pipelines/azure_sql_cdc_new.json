@@ -1,0 +1,46 @@
+{
+  "catalog": "sample_clames",
+  "channel": "CURRENT",
+  "ingestion_definition": {
+    "connection_name": "azure_sql_cdc",
+    "connector_type": "CDC",
+    "data_staging_options": {
+      "catalog_name": "sample_clames",
+      "schema_name": "00_landing",
+      "volume_name": "__databricks_ingestion_gateway_staging_data-<pipeline-id>"
+    },
+    "objects": [
+      {
+        "table": {
+          "destination_catalog": "sample_clames",
+          "destination_schema": "01_bronze",
+          "source_catalog": "jd-sql-learn-2026",
+          "source_schema": "dbo",
+          "source_table": "claims"
+        }
+      },
+      {
+        "table": {
+          "destination_catalog": "sample_clames",
+          "destination_schema": "01_bronze",
+          "source_catalog": "jd-sql-learn-2026",
+          "source_schema": "dbo",
+          "source_table": "policies"
+        }
+      },
+      {
+        "table": {
+          "destination_catalog": "sample_clames",
+          "destination_schema": "01_bronze",
+          "source_catalog": "jd-sql-learn-2026",
+          "source_schema": "dbo",
+          "source_table": "customers"
+        }
+      }
+    ],
+    "source_type": "SQLSERVER"
+  },
+  "name": "azure_sql_cdc_new",
+  "schema": "00_landing",
+  "serverless": true
+}
