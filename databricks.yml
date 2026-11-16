@@ -1,0 +1,33 @@
+# Databricks Asset Bundle (Declarative Automation Bundle) for sample_clames_pipeline.
+# Validate with:  databricks bundle validate -t dev --profile <profile>
+#
+# NOTE: the transformations write to fully-qualified tables (sample_clames.0x_*). The pipeline already exists in the
+# workspace; deploying this bundle creates a SEPARATE pipeline resource, so deploy to a scratch catalog first
+# (override `catalog`) or adopt the existing pipeline with `databricks bundle deployment bind`.
+bundle:
+  name: sample_clames_pipeline
+
+include:
+  - resources/*.yml
+
+variables:
+  catalog:
+    description: Unity Catalog catalog that holds the medallion schemas
+    default: sample_clames
+  event_hub_namespace:
+    description: Event Hubs namespace (Kafka endpoint host prefix)
+    default: sensor-stream
+  event_hub_name:
+    description: Event Hub (Kafka topic) with the telematics events
+    default: telemetry-events
+  service_credential_name:
+    description: Unity Catalog SERVICE credential with the Event Hubs Data Receiver role
+    default: eventhub_sensor_stream_cred
+
+targets:
+  dev:
+    default: true
+    mode: development
+    workspace:
+      # host comes from your CLI profile; no workspace ids or user names are stored in git
+      root_path: ~/.bundle/${bundle.name}/${bundle.target}

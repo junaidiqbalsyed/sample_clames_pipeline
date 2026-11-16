@@ -1,0 +1,21 @@
+# ETL pipeline: landing -> bronze -> silver -> gold (serverless, triggered).
+resources:
+  pipelines:
+    sample_clames_pipeline:
+      name: sample_clames_pipeline
+      catalog: ${var.catalog}
+      schema: 01_bronze
+      serverless: true
+      photon: true
+      continuous: false
+      channel: CURRENT
+      configuration:
+        event_hub_namespace: ${var.event_hub_namespace}
+        event_hub_name: ${var.event_hub_name}
+        service_credential_name: ${var.service_credential_name}
+      environment:
+        dependencies:
+          - geopy
+      libraries:
+        - glob:
+            include: ../src/sample_clames_pipeline/transformations/**
