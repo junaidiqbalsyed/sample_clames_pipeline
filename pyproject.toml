@@ -1,0 +1,18 @@
+[project]
+name = "smart-clames"
+version = "0.1.0"
+description = "Smart-claims lakehouse: telematics simulator, Azure SQL source data and Databricks Lakeflow pipeline"
+readme = "README.md"
+requires-python = ">=3.15"
+dependencies = [
+    "azure-eventhub>=5.15.1",
+    "azure-identity>=1.27.0",
+    "mssql-python>=1.17.0",
+    "pillow>=13.0.0",
+    "pyarrow>=26.0.1",
+    "python-dotenv>=1.2.4",
+]
+
+[build-system]
+requires = ["uv_build>=0.13.7,<0.14.0"]
+build-backend = "uv_build"

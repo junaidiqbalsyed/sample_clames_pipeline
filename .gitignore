@@ -218,3 +218,17 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# --- smart-claims project ---
+.env
+.DS_Store
+.python-version
+# generator inputs / third-party photos (CC / private-study licences) - not redistributed
+data/_archive/
+# stray duplicate parquet files in the data/ root (real copies live in data/telematics/)
+data/*.parquet
+# image binaries live in Databricks volumes / ADLS, never in git
+*.jpg
+*.jpeg
+*.png
+!docs/images/*.png
