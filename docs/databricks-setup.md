@@ -29,7 +29,7 @@ Databricks utility objects v1.7, DDL audit table + trigger, `lakeflowFixPermissi
 ## 3. Declarative pipeline `sample_clames_pipeline`
 
 Spec: [`infra/databricks/pipelines/sample_clames_pipeline.json`](../infra/databricks/pipelines/sample_clames_pipeline.json), source:
-[`pipelines/sample_clames_pipeline/transformations/`](../pipelines/sample_clames_pipeline/transformations). Serverless, Photon, triggered, default catalog
+[`src/sample_clames_pipeline/transformations/`](../src/sample_clames_pipeline/transformations). Serverless, Photon, triggered, default catalog
 `sample_clames`, default schema `01_bronze`. Pipeline configuration:
 
 | Key | Value | Used by |
@@ -47,9 +47,9 @@ Environment dependency: `geopy`.
 ```bash
 P=<your-cli-profile>
 # workspace → local (how the repo copy was produced)
-databricks workspace export-dir "/Workspace/Users/<you>/clames/sample_clames_pipeline" pipelines/sample_clames_pipeline --profile $P
+databricks workspace export-dir "/Workspace/Users/<you>/clames/sample_clames_pipeline" src/sample_clames_pipeline --profile $P
 # local → workspace
-databricks workspace import-dir pipelines/sample_clames_pipeline "/Workspace/Users/<you>/clames/sample_clames_pipeline" --overwrite --profile $P
+databricks workspace import-dir src/sample_clames_pipeline "/Workspace/Users/<you>/clames/sample_clames_pipeline" --overwrite --profile $P
 # create the pipeline from the sanitized spec (replace <your-user-id> in the JSON first)
 databricks pipelines create --json @infra/databricks/pipelines/sample_clames_pipeline.json --profile $P
 databricks pipelines start-update <pipeline-id> --profile $P

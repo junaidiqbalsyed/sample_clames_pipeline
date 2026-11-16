@@ -1,6 +1,9 @@
 # src/
 
-Python package `smart_clames` (run scripts by path with `uv run python <path>`).
+All source code.
+
+- `sample_clames_pipeline/` - the Databricks ETL pipeline (see its README).
+- `smart_clames/` - Python tooling, run by path with `uv run python <path>`:
 
 | Script | Purpose |
 |---|---|

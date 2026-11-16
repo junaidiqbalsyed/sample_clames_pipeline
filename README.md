@@ -58,22 +58,23 @@ Lakeflow Connect, Auto Loader) · SQL Server Change Tracking / CDC · Python wit
 
 ```
 sample_clames_pipeline/
-├── pipelines/                          Databricks ETL code
-│   └── sample_clames_pipeline/transformations/
-│       ├── 00_landing/                 Kafka → raw table
-│       ├── 01_bronze/                  JSON parsing, Auto Loader for images
-│       ├── 02_silver/                  cleaning + data-quality expectations
-│       └── 03_gold/                    joins, aggregates, geocoding
+├── src/                                all source code
+│   ├── sample_clames_pipeline/         Databricks ETL pipeline
+│   │   └── transformations/
+│   │       ├── 00_landing/             Kafka → raw table
+│   │       ├── 01_bronze/              JSON parsing, Auto Loader for images
+│   │       ├── 02_silver/              cleaning + data-quality expectations
+│   │       └── 03_gold/                joins, aggregates, geocoding
+│   └── smart_clames/                   Python tooling
+│       ├── streaming/                  telematics simulator → Event Hubs
+│       ├── database/                   Azure SQL loaders
+│       └── synthetic_data/             data, photo and training-set generators
 ├── infra/                              infrastructure as scripts
 │   ├── azure/setup.sh                  resource group, storage, Event Hubs, SQL, access connector
 │   └── databricks/
 │       ├── unity_catalog.sql           catalog, schemas, external location, volumes
 │       └── pipelines/*.json            sanitized pipeline specs
 ├── sql/                                source database scripts (run in order 01 → 03)
-├── src/smart_clames/                   Python tooling
-│   ├── streaming/                      telematics simulator → Event Hubs
-│   ├── database/                       Azure SQL loaders
-│   └── synthetic_data/                 data, photo and training-set generators
 ├── data/                               small committed datasets + answer keys
 ├── docs/                               setup guides, images, project log
 ├── pyproject.toml · uv.lock            Python environment
@@ -100,7 +101,7 @@ cp .env.example .env            # fill in Event Hubs + Azure SQL values; .env is
 | 2. Source database | `uv run python src/smart_clames/database/load_sql_server.py` (drops existing tables) | [sql/README.md](sql/README.md) |
 | 3. Synthetic data | `uv run python src/smart_clames/synthetic_data/generate_synthetic.py`, then `.../database/load_synthetic.py` | [data/README.md](data/README.md) |
 | 4. Change tracking | run `sql/02_enable_change_tracking.sql`, `sql/03_lakeflow_utility_objects.sql` | [sql/README.md](sql/README.md) |
-| 5. Databricks | `infra/databricks/unity_catalog.sql`, Lakeflow Connect, deploy `pipelines/` | [docs/databricks-setup.md](docs/databricks-setup.md) |
+| 5. Databricks | `infra/databricks/unity_catalog.sql`, Lakeflow Connect, deploy `src/sample_clames_pipeline/` | [docs/databricks-setup.md](docs/databricks-setup.md) |
 | 6. Stream telematics | `uv run python src/smart_clames/streaming/producer.py --vehicles 50 --speedup 30` | `--dry-run` prints events and rewrites `data/replay_plan.csv`; `--live` stamps events with now |
 
 ## Data

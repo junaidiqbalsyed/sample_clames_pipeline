@@ -6,5 +6,5 @@ Subpackages (each script is run by path, e.g. ``uv run python src/smart_clames/s
 * ``database``       - loaders that create and fill the Azure SQL source tables.
 * ``synthetic_data`` - generators for synthetic SQL data, claim photos and the damage-classifier training set.
 
-The Databricks ETL code itself lives in ``pipelines/sample_clames_pipeline`` (not in this package).
+The Databricks ETL code itself lives in ``src/sample_clames_pipeline`` (not in this package).
 """
