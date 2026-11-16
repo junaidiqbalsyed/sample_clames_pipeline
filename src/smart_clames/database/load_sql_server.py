@@ -9,7 +9,7 @@ business-level dirt (negative premiums, odd chassis numbers, ...) is loaded as-i
 import csv
 import re
 import time
-from datetime import date, datetime
+from datetime import datetime
 from decimal import Decimal
 from pathlib import Path
 

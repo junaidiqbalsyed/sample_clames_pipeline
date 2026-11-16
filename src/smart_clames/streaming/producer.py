@@ -156,7 +156,7 @@ def load_plans(rng: random.Random, n: int, lead_s: float, source: str = "both") 
     return plans
 
 
-def build_vehicle(plan: Plan, interval: float) -> Vehicle:
+def build_vehicle(plan: Plan, interval: float) -> "Vehicle":
     """A car whose drive ends exactly at the claim's incident location at the incident time.
     Dry-run the drive, measure how far the car ends up from the target, shift the start by that error, repeat."""
     start = None

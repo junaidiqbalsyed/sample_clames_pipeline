@@ -26,7 +26,6 @@ Use --dirty-rate 0 for a perfectly clean dataset, 2 for twice as much garbage.
 """
 import argparse
 import csv
-import math
 import random
 import uuid
 from collections import Counter, defaultdict
