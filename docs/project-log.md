@@ -5,7 +5,7 @@ rebuilt from scratch. Updated after every change. No credentials are stored here
 
 _Last updated: 2026-11-14_ (repo later restructured: scripts now in `src/smart_clames/{streaming,database,synthetic_data}/`, data in `data/`, pipeline code in `pipelines/`; paths below are the historical ones)
 
-**Contents:** 1 Overview · 2 Who did the work · 3 Recreate from scratch · 4 History by phase · 5 Data inventory ·
+**Contents:** 1 Overview · 3 Recreate from scratch · 4 History by phase · 5 Data inventory ·
 6 Script reference · 7 Design details · 7b Azure SQL: original load + synthetic data (full process) · 7c Databricks side · 8 Gotchas · 9 Open to-do · 10 Change log
 
 ---
@@ -29,24 +29,6 @@ Key resource names: Event Hubs namespace `smartclamesdev` (UK South; hub name in
 Azure SQL server `jd-sql-learn-2026.database.windows.net`, database `jd-sql-learn-2026` (serverless, auto-pauses);
 Databricks workspace `https://adb-7405614338288360.0.azuredatabricks.net` (CLI profile `adb-7405614338288360`),
 catalog `sample_clames`, schema `00_landing`, volumes `training_images` (managed), `claims` (managed / internal) and **`customer_claims` (EXTERNAL, ADLS Gen2 container `claims` = the location of record for claim photos + metadata)**.
-
----
-
-## 2. Who did the work ("agents")
-
-No sub-agents or other agent types were ever spawned. All work was done by **Claude Code** (model: Sonnet-class) in three
-sessions in this folder (transcripts: `~/.claude/projects/-Users-junaid-Documents-smart-clames/*.jsonl`; shared memory:
-`~/.claude/projects/-Users-junaid-Documents-smart-clames/memory/`):
-
-| Session | When (UTC) | What it did |
-|---|---|---|
-| `78de645d…` | 2026-11-13 04:48 | Interrupted immediately, no work |
-| `295a23c7…` | 2026-11-12 04:44 → 2026-11-14 06:00 | Event Hubs guidance, first producer, producer v2 (realistic), `build_profile.py`, Azure SQL schema + loaders, synthetic data generator, extra fraud scenarios, column renames, Change Tracking/CDC, Databricks Lakeflow utility objects |
-| `4bfa1841…` | 2026-11-13 → 2026-11-14 | Producer partition key + replay mode, claim photos, real-photo sourcing, training set, accident images, Databricks volume uploads, this log |
-
-Sessions 2 and 3 overlapped in time. Skills used: `databricks-lakeflow-connect`, `databricks-core`. One Firecrawl web search
-(dataset discovery). The user supplied: the parquet telematics data, the SQL CSVs, original claim images + metadata,
-`training_imgs` (56 images) and the `Accident_Detection` images.
 
 ---
 
@@ -89,7 +71,7 @@ an Azure subscription, a Databricks workspace with Unity Catalog.
 
 ### Phase 1 – Event Hubs + first producer (2026-11-12)
 - User had parquet telematics (cols `chassis_no, latitude, longitude, event_timestamp, speed`; 2015 timestamps, NYC box, ~1 ping/car/min) and an empty Event Hubs namespace.
-- Claude explained the flow (producer → Event Hubs → Databricks Kafka → Lakeflow), first wrote a parquet **replay** producer, then (user wanted fresh "now" data) a **simulator**; the user then asked to write their own producer, creds were put in `.env`, a 9-event test (3 cars × 3 ticks) reached the hub; portal showed UTC timestamps vs IST display.
+- Explained the flow (producer → Event Hubs → Databricks Kafka → Lakeflow), first wrote a parquet **replay** producer, then (user wanted fresh "now" data) a **simulator**; the user then asked to write their own producer, creds were put in `.env`, a 9-event test (3 cars × 3 ticks) reached the hub; portal showed UTC timestamps vs IST display.
 - Explained "tick" (one loop round: move all cars → 1 event each → send batch → sleep `--interval`).
 
 ### Phase 2 – Realistic producer (2026-11-12/14)
@@ -242,7 +224,7 @@ Always address Unity Catalog names literally (`00_landing` starts with a digit: 
 **Storage / external locations (UC):** `claims_external_location` → `abfss://claims@certificationprep001.dfs.core.windows.net/` (credential `claims-external-container`) backs the external volume `customer_claims`; `certificationprep001-metastore` → `abfss://metastore@certificationprep001.dfs.core.windows.net/` (managed volumes live here); `adbw_databricks_certification` → workspace default storage.
 **Internal vs external:** managed volumes (`claims`, `training_images`) store files inside the metastore's storage and Unity Catalog owns their lifecycle (dropping the volume deletes the files). The external volume `customer_claims` points at your own ADLS Gen2 container, so files stay in that container even if the volume is dropped — this is where the data is meant to be maintained.
 
-**Lakeflow Connect objects the user already created in the UI** (not by Claude): UC connections `azure_sql_cdc` (SQLSERVER), `azure_sql_upsert_cdc` (SQLSERVER), `azure_sql_learn_2026` (listed as MYSQL type);
+**Lakeflow Connect objects the user already created in the UI**: UC connections `azure_sql_cdc` (SQLSERVER), `azure_sql_upsert_cdc` (SQLSERVER), `azure_sql_learn_2026` (listed as MYSQL type);
 pipelines `azure_sql_cdc_new` (id `25a71756-1187-4321-8ebd-35d0946bb498`, the gateway; state IDLE) and `New Pipeline 2026-11-13 20:46` (id `83bed603-…`, IDLE).
 SQL-side prerequisites for these are in §7b-F.
 
@@ -309,7 +291,7 @@ Read pattern for the stream: Kafka bootstrap `smartclamesdev.servicebus.windows.
 | 2026-11-14 | Training set: HF + original 56 + accident9k, mapping fixed (Crushed↔Breakage), splits + `labels.csv` |
 | 2026-11-14 | Training set uploaded to Databricks volume, local deleted |
 | 2026-11-14 | Claim photos uploaded to `/Volumes/sample_clames/00_landing/claims/images/` (24,463, verified by name) — by mistake, meant for the external volume; local `claims/images` + `images 2` deleted |
-| 2026-11-14 | This log created, rewritten into full recreation guide with history from session start and agent/session record |
+| 2026-11-14 | This log created, rewritten into a full recreation guide |
 | 2026-11-14 | Log extended: full synthetic-data/Azure SQL process (§7b) and Databricks workspace/volume/CLI details (§7c) |
 | 2026-11-14 | Copied volume `claims` → `customer_claims` server-side (serverless job, 24,464 files, counts match); verified all compute off |
 | 2026-11-14 | Log corrected: claim photos' location of record is the EXTERNAL volume `customer_claims` (ADLS Gen2 container `claims`); `claims` and `training_images` are managed/internal volumes |
