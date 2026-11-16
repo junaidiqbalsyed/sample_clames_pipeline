@@ -1,0 +1,21 @@
+chassis_no,claim_no,scenario,event,incident_type,true_severity,incident_utc,first_ping_utc,impact_mph,incident_lat,incident_lon
+4T10NTCS7NY982839,015a2f3b-1742-4549-bc35-f213cdd0fd13,genuine,crash,Multi-vehicle Collision,Major Damage,2026-10-03 23:03:00,2026-10-03 23:00:00,46.8,40.740776,-73.868788
+5FNUGG2U6GK625245,a09f6908-4939-4082-8025-6e8275add10d,genuine,crash,Multi-vehicle Collision,Minor Damage,2023-05-20 10:37:00,2023-05-20 10:34:00,19.8,40.766727,-73.811823
+KMHJT81E7FU056924,aca2b381-6aeb-4e57-b3e1-868ee8560b95,original,crash,Single Vehicle Collision,Minor Damage,2019-03-01 05:10:00,2019-03-01 05:07:00,25.1,40.678087,-73.853461
+MHYDN7A35DJ300827,8b04ddb5-72c0-4070-a9b3-26c728dad133,original,crash,Single Vehicle Collision,Major Damage,2018-05-13 14:31:00,2018-05-13 14:28:00,43.0,40.787921,-73.847304
+5YJX1JM23MU221186,45f769b5-56a2-47e8-9172-32e82e95765e,genuine,crash,Multi-vehicle Collision,Major Damage,2026-05-10 05:55:00,2026-05-10 05:52:00,41.0,40.764579,-73.837736
+1FMAP2TX9PJ799455,2fdff4d9-f6a9-4fdf-a6c2-dceb085c1a59,genuine,crash,Multi-vehicle Collision,Major Damage,2025-12-21 17:51:00,2025-12-21 17:48:00,41.8,40.688074,-73.899537
+1FTJJFFA5LJ390979,5633c767-b226-41ab-9e3c-5658d3ed0ae0,inflated_claim,crash,Single Vehicle Collision,Minor Damage,2024-10-07 03:24:00,2024-10-07 03:21:00,24.2,40.707173,-73.882816
+5YJKFX621LU243486,98230ca2-4a30-4771-8b17-f187df9bfed2,serial_claimant,crash,Single Vehicle Collision,Trivial Damage,2026-03-19 19:24:00,2026-03-19 19:21:00,8.3,40.756179,-73.922462
+JE4LP21U7JZ701434,635fdfaf-d844-4f7d-9b28-3c2c0cd7d731,original,parked,Parked Car,Major Damage,2020-04-27 07:14:00,2020-04-27 07:11:00,37.3,40.791739,-73.85751
+5J6X0XV16BK344345,e3b6109d-1d55-4046-97df-863ba02ad554,genuine,crash,Single Vehicle Collision,Total Loss,2025-10-31 03:51:00,2025-10-31 03:48:00,46.0,40.773751,-73.863241
+KNAJC525X85790629,93548008-3d2f-4a19-b75e-8d2e1c9e43a3,original,crash,Single Vehicle Collision,Minor Damage,2016-10-10 14:04:00,2016-10-10 14:01:00,22.1,40.686973,-73.811106
+5N1ZP2XW7M8796998,b3af1bfd-bd14-4025-89fb-80402c553902,soon_after_inception,theft,Vehicle Theft,Total Loss,2026-07-06 19:43:00,2026-07-06 19:40:00,60.4,40.691187,-73.95114
+1FTT3WJ94MJ906881,7aff5f8e-3b6b-4086-ad8e-38c41c38a3ea,inflated_claim,crash,Single Vehicle Collision,Minor Damage,2026-04-28 18:27:00,2026-04-28 18:24:00,14.3,40.731942,-73.875694
+KNAPB8112D7425874,69d73279-24d7-4f28-96ac-8511bc74bfaf,original,crash,Multi-vehicle Collision,Minor Damage,2018-06-16 21:48:00,2018-06-16 21:45:00,27.3,40.748355,-73.918268
+LGWEE4A40KH899678,131d09be-b985-46a4-a32e-94f2700c3e3c,original,parked,Parked Car,Total Loss,2018-09-11 23:38:00,2018-09-11 23:35:00,59.1,40.796671,-73.814774
+5TDBY64A3ES100962,26c82780-0c60-4bcb-965b-d49fc16a6104,original,crash,Multi-vehicle Collision,Trivial Damage,2017-10-03 09:06:00,2017-10-03 09:03:00,8.9,40.682524,-73.813717
+5YJ13FXM1KU726148,ce51efd9-0779-4e1f-ab88-2e0482071499,genuine,crash,Multi-vehicle Collision,Major Damage,2026-11-01 21:06:00,2026-11-01 21:03:00,42.9,40.747271,-73.901476
+JL6B6E6P3EK005799,a2ebc846-022a-446f-bca8-00435b7260cc,original,crash,Single Vehicle Collision,Trivial Damage,2016-10-17 16:32:00,2016-10-17 16:29:00,13.4,40.724291,-73.813412
+1N4AKDPA0E8632810,9f35ee51-c7d9-458c-b319-3716d1dc9967,genuine,crash,Multi-vehicle Collision,Total Loss,2023-07-17 19:10:00,2023-07-17 19:07:00,43.7,40.745714,-73.911155
+SAJAA66N5EMK08819,048d1c05-6cb9-4bd7-a991-48baf1f79674,original,crash,Multi-vehicle Collision,Major Damage,2016-01-26 20:48:00,2016-01-26 20:45:00,41.4,40.756721,-73.846563

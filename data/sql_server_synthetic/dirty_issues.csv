@@ -1,0 +1,38 @@
+table,issue,suggested_expectation,rows_injected
+customers,geo_missing,borough IS NOT NULL AND zip_code IS NOT NULL,124
+customers,borough_format,"borough IN ('BRONX','BROOKLYN','MANHATTAN','QUEENS','STATEN ISLAND')",103
+customers,zip_borough_mismatch,zip_code belongs to borough (check against a zip reference table),84
+customers,zip_malformed,zip_code RLIKE '^[0-9]{5}$' AND zip_code BETWEEN '10001' AND '11697',84
+customers,dob_future,date_of_birth <= current_date(),56
+customers,dob_implausible,"date_of_birth BETWEEN add_months(current_date(), -12*100) AND add_months(current_date(), -12*16)",100
+customers,name_format,"name RLIKE '^[^,]+, [^,]+$' AND name = trim(name)",128
+policies,premium_negative,PREMIUM > 0,297
+policies,premium_zero,PREMIUM > 0,199
+policies,premium_absurd,PREMIUM < 50000,126
+policies,sum_insured_bad,SUM_INSURED BETWEEN 2000 AND 500000,220
+policies,model_year_bad,MODEL_YEAR BETWEEN 1980 AND year(current_date()) + 1,199
+policies,vin_malformed,CHASSIS_NO RLIKE '^[A-HJ-NPR-Z0-9]{17}$',440
+policies,vin_bad_checksum,VIN check digit valid (needs a small UDF),180
+policies,issue_after_effective,POL_ISSUE_DATE <= POL_EFF_DATE,195
+policies,issue_far_future,POL_ISSUE_DATE <= current_date(),54
+policies,term_length_wrong,"datediff(POL_EXPIRY_DATE, POL_EFF_DATE) BETWEEN 360 AND 366",199
+policies,make_model_mismatch,"(MAKE, MODEL) pair exists in a vehicle reference table",275
+policies,make_garbage,MAKE = upper(trim(MAKE)) AND MAKE IN (<known makes>),184
+policies,use_garbage,"USE_OF_VEHICLE IN ('PRIVATE','COMMERCIAL','RENTACAR')",253
+policies,deductible_bad,"DEDUCTABLE IN (0, 500, 1000, 2000)",288
+policies,duplicate_policy,"one row per (CHASSIS_NO, POL_EFF_DATE) - dedupe or expect uniqueness",175
+claims,age_implausible,driver_age BETWEEN 18 AND 100,60
+claims,claim_before_incident,claim_date >= incident_date,73
+claims,claim_in_future,claim_date <= current_date(),28
+claims,incident_outside_term,incident_date BETWEEN POL_EFF_DATE AND POL_EXPIRY_DATE (needs a join),68
+claims,amount_negative,injury >= 0 AND property >= 0 AND vehicle >= 0,58
+claims,amount_zero,total > 0,36
+claims,amount_outlier,vehicle <= SUM_INSURED (needs a join),31
+claims,vehicles_out_of_range,number_of_vehicles_involved BETWEEN 1 AND 4,48
+claims,vehicles_type_mismatch,incident_type LIKE 'Multi%' <=> number_of_vehicles_involved > 1,73
+claims,witnesses_outlier,number_of_witnesses BETWEEN 0 AND 5,44
+claims,category_garbage,incident_type / incident_severity / collision_type / insured_relationship IN (<allowed values>),78
+claims,license_implausible,license_issue_date BETWEEN '1930-01-01' AND claim_date,46
+claims,months_outlier,months_as_customer <= 60,30
+claims,theft_with_collision,incident_type <> 'Vehicle Theft' OR collision_type IS NULL,39
+claims,tp_vehicle_damage,NOT (policy is TP AND vehicle > 0) (needs a join),8
